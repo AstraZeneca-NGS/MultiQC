@@ -245,7 +245,7 @@ class MultiqcModule(BaseMultiqcModule):
             'hidden': hide_seq_length
         }
         headers['percent_fails'] = {
-            'title': '% Failed',
+            'title': 'Fail',
             'description': 'Percentage of modules failed in FastQC report (includes those not plotted here)',
             'max': 100,
             'min': 0,

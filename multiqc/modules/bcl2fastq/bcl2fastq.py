@@ -272,21 +272,28 @@ class MultiqcModule(BaseMultiqcModule):
                 "perfectPercent": '{0:.1f}'.format(perfectPercent),
                 "trimmedPercent": self.bcl2fastq_bysample[key]['percent_trimmed']
             }
+        read_format = '{:,.1f} ' + config.read_count_prefix
+        if config.read_count_multiplier == 1:
+            read_format = '{:,.0f}'
         headers = OrderedDict()
         headers['total'] = {
             'title': '{} Clusters'.format(config.read_count_prefix),
             'description': 'Total number of reads for this sample as determined by bcl2fastq demultiplexing ({})'.format(config.read_count_desc),
             'scale': 'Blues',
-            'shared_key': 'read_count'
+            'modify': lambda x: x * config.read_count_multiplier,
+            'shared_key': 'read_count',
+            'format': read_format,
         }
         headers['yieldQ30'] = {
-            'title': '{} Yield &ge; Q30'.format(config.base_count_prefix),
+            'title': '&ge; Q30',
             'description': 'Number of bases with a Phred score of 30 or higher ({})'.format(config.base_count_desc),
             'scale': 'Greens',
-            'shared_key': 'base_count'
+            'modify': lambda x: x * config.base_count_multiplier,
+            'shared_key': 'base_count',
+            'format': '{:,.1f}&nbsp;' + config.base_count_prefix,
         }
         headers['perfectPercent'] = {
-            'title': '% Perfect Index',
+            'title': 'Perf Idx',
             'description': 'Percent of reads with perfect index (0 mismatches)',
             'max': 100,
             'min': 0,
