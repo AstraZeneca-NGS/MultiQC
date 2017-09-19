@@ -280,7 +280,7 @@ class MultiqcModule(BaseMultiqcModule):
             'title': '{} Clusters'.format(config.read_count_prefix),
             'description': 'Total number of reads for this sample as determined by bcl2fastq demultiplexing ({})'.format(config.read_count_desc),
             'scale': 'Blues',
-            'modify': lambda x: x * config.read_count_multiplier,
+            'modify': lambda x: x * 2 * config.read_count_multiplier,
             'shared_key': 'read_count',
             'format': read_format,
         }
